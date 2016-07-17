@@ -8,17 +8,168 @@ namespace ConsoleApplication7
 {
     class Program
     {
+        static ConsoleKey k;
+
+        static int y = 15;
+
+        static string[] MenuVar = new string[4];
+
+        static byte CurrentMenuVar = 0;
+
         static void Main(string[] args)
         {
+            MenuVar[0] = "        ИГРАТЬ         ";
+            MenuVar[1] = "УРОВЕНЬ СЛОЖНОСТИ: {0} ";
+            MenuVar[2] = "        АВТОРЫ         ";
+            MenuVar[3] = "    ВЫЙТИ ИЗ ИГРЫ      ";
             Console.CursorVisible = false;
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
-            Menu_Method();
+            MenuPic();
+            MenuCursor();
             Console.ReadLine();
         }
 
+        static void MenuCursor()
+        {
 
-        static void Menu_Method()
+            
+
+            while (true)
+            {
+                int Pre_y = y;
+               k = Console.ReadKey(true).Key;
+
+                if (k == ConsoleKey.S || k == ConsoleKey.DownArrow)
+                {
+                    y += 2;
+
+                    if (y > 21)
+                    {
+                        y = 15;
+                        
+                    }
+                    
+                }
+
+                else if (k == ConsoleKey.W || k == ConsoleKey.UpArrow)
+                {
+                    y -= 2;
+                    if (y < 15)
+                    {
+                        y = 21;
+                    }
+                    
+                }
+
+                ChoiceString(y, Pre_y);
+
+                Console.SetCursorPosition(40, y);
+                Console.Write("");
+            }
+        }
+
+        static void ChoiceString(int method_y, int Pre_y)
+        {
+            if (k == ConsoleKey.S || k == ConsoleKey.DownArrow)
+            {
+                if (Pre_y < method_y)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(31, Pre_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+
+                    CurrentMenuVar++;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(31, method_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(31, Pre_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+
+                    CurrentMenuVar = 0;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(31, method_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+                }
+            }
+            else
+            {
+                if (Pre_y > method_y)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(31, Pre_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+
+                    CurrentMenuVar--;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(31, method_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(31, Pre_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+
+                    CurrentMenuVar = 3;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(31, method_y);
+                    Console.WriteLine(MenuVar[CurrentMenuVar]);
+
+                }
+            }
+        }
+
+        static void MenuChoices()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            int DrawY = 15;
+
+            Console.SetCursorPosition(26, DrawY - 1);
+            Console.WriteLine(" ╔═══════════════════════════╗ ");
+
+            while (DrawY < 22)
+            {
+                Console.SetCursorPosition(26, DrawY);
+                Console.WriteLine(" ║                           ║ ");
+                DrawY++;
+            }
+
+            Console.SetCursorPosition(26, DrawY);
+            Console.WriteLine(" ╚═══════════════════════════╝ ");
+
+
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(31, 15);
+            Console.WriteLine(MenuVar[0]);
+
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            Console.SetCursorPosition(31, 17);
+            Console.WriteLine(MenuVar[1]);
+
+            Console.SetCursorPosition(31, 19);
+            Console.WriteLine(MenuVar[2]);
+
+            Console.SetCursorPosition(31, 21);
+            Console.WriteLine(MenuVar[3]);
+
+            Console.SetCursorPosition(40, y);
+        }
+
+        static void MenuPic()
         {
             Console.ForegroundColor = ConsoleColor.Black;
 
@@ -80,6 +231,8 @@ namespace ConsoleApplication7
             WriteString("▄           ▀", 30, 10);
 
             Console.BackgroundColor = ConsoleColor.White;
+
+            MenuChoices();
         }
 
 
