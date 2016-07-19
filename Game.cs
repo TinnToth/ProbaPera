@@ -16,18 +16,21 @@ namespace ConsoleApplication7
 
         static string[] MenuVar = new string[4];
 
-        static string[] LevelHip = new string[3];
+        static string[] LevelHip = new string[4];
 
-        static byte CurrentMenuVar = 0, CurrentLevelVar = 0;
+        static int CurrentMenuVar = 0, CurrentLevelVar = 0;
+
+        static List<int> Inventory = new List<int>();
 
         static void Main(string[] args)
         {
-            LevelHip[0] = "Легко";
+            LevelHip[0] = "Легко    ";
             LevelHip[1] = "Нормально";
-            LevelHip[2] = "Сложно";
+            LevelHip[2] = "Сложно   ";
+
 
             MenuVar[0] = "           ИГРАТЬ         ";
-            MenuVar[1] = String.Format("УРОВЕНЬ СЛОЖНОСТИ:  {0} ", LevelHip[CurrentLevelVar]);
+            MenuVar[1] = String.Format("УРОВЕНЬ СЛОЖНОСТИ:  {0}", LevelHip[CurrentLevelVar]);
             MenuVar[2] = "           АВТОРЫ         ";
             MenuVar[3] = "       ВЫЙТИ ИЗ ИГРЫ      ";
 
@@ -74,13 +77,17 @@ namespace ConsoleApplication7
                     }
                     ChoiceString(y, Pre_y);
                 }
+                if (CurrentMenuVar == 1)
+                {
+                    Level();
+                }
 
                 else if (k == ConsoleKey.Enter)
                 {
                     switch (CurrentMenuVar)
                     {
                         case (0):
-
+                            Game();
                             break;
 
                         case (1):
@@ -158,10 +165,7 @@ namespace ConsoleApplication7
                 }
             }
 
-            if (CurrentMenuVar == 1)
-            {
-                Level(k);
-            }
+
         }
 
         static void MenuChoices()
@@ -280,7 +284,7 @@ namespace ConsoleApplication7
             Console.WriteLine(Text);
         }
 
-        static void Level(ConsoleKey k)
+        static void Level()
         {
             if (k == ConsoleKey.A || k == ConsoleKey.LeftArrow)
             {
@@ -304,7 +308,7 @@ namespace ConsoleApplication7
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(28, 17);
-            Console.WriteLine(MenuVar[1]);
+            Console.WriteLine(MenuVar[1] = String.Format("УРОВЕНЬ СЛОЖНОСТИ:  {0}", LevelHip[CurrentLevelVar]));
         }
 
         static void Autors()
@@ -314,9 +318,9 @@ namespace ConsoleApplication7
                 MenuPic();
                 Window();
                 WriteString("РАЗРАБОТЧИКИ", 35, 15);
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 WriteString("АСЛАНИДИ КОНСТАНТИН", 32, 17);
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 WriteString("ЕМЕЛЬЯНОВ МАКСИМ", 33, 19);
                 Console.ForegroundColor = ConsoleColor.Black;
                 WriteString("СПАСИБО ЗА ВНИМАНИЕ :)", 31, 21);
@@ -334,10 +338,89 @@ namespace ConsoleApplication7
 
                     break;
                 }
-                
+
             }
             while (true);
         }
+
+        static void Game()
+        {
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("                  ВЫ ЗАПУСТИЛИ ИГРУ НА УРОВНЕ СЛОЖНОСТИ:   {0}", LevelHip[CurrentLevelVar]);
+                Console.WriteLine("                         НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ");
+                Console.WriteLine("                        ИЛИ ESCAPE, ЧТОБЫ ВЕРНУТЬСЯ В МЕНЮ");
+
+
+                k = Console.ReadKey(true).Key;
+
+                if (k == ConsoleKey.Escape)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    MenuPic();
+                    MenuChoices();
+
+                    CurrentMenuVar = 0;
+
+                    y = 15;
+
+                    break;
+                }
+                if (k == ConsoleKey.Enter)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+
+                    Console.WriteLine("Выводиться предыстрория игры");
+                    Console.WriteLine("Производиться выбор перса(пол)");//для озвучки) если будем делать звук
+
+                    break;
+
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    Inventory.Add(0);
+                }
+            }
+            while (true);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        static void InventoryAddItem(int NumberOfTheItem)
+        {
+            //Метод должен проверять есть ли место в инвентаре, если нет, то выдавать диалоговое окно
+            //Если место есть, то добавить
+        }
+
 
     }
 }
