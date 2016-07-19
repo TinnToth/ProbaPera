@@ -8,30 +8,37 @@ namespace ConsoleApplication7
 {
     class Program
     {
-        static bool GameExit;
+        static bool GameExit, GamePlay;
 
         static ConsoleKey k;
 
         static int y = 15;
 
-        static string[] MenuVar = new string[4];
+        static string[] ClassHip = new string[2];
 
-        static string[] LevelHip = new string[4];
+        static string[] SexHip = new string[2];
 
-        static byte CurrentMenuVar = 0, CurrentLevelVar = 1;
+        static string[] MenuVar = new string[7];
+
+        static string[] LevelHip = new string[3];
+
+        static int CurrentMenuVar = 0, CurrentLevelVar = 0, CurrentClass = 0, CurrentSex = 0;
 
         static void Main(string[] args)
         {
-            LevelHip[0] = "Сложно   ";
-            LevelHip[1] = "Легко    ";
-            LevelHip[2] = "Нормально";
-            LevelHip[3] = "Сложно   ";
+            ClassHip[0] = "Рыцарь  ";
+            ClassHip[1] = "Ассасин ";
+            LevelHip[0] = "Легко    ";
+            LevelHip[1] = "Нормально";
+            LevelHip[2] = "Сложно   ";
 
             MenuVar[0] = "           ИГРАТЬ         ";
             MenuVar[1] = String.Format("УРОВЕНЬ СЛОЖНОСТИ:  {0}", LevelHip[CurrentLevelVar]);
             MenuVar[2] = "           АВТОРЫ         ";
             MenuVar[3] = "       ВЫЙТИ ИЗ ИГРЫ      ";
-
+            MenuVar[4] = String.Format("КЛАСС ПЕРСОНАЖА:   {0}", ClassHip[CurrentClass]);
+            MenuVar[5] = String.Format("ПОЛ ПЕРСОНАЖА :   {0}", SexHip[CurrentSex]);
+            MenuVar[6] = "ПРОДОЛЖИТЬ";
             Console.CursorVisible = false;
 
             Console.BackgroundColor = ConsoleColor.White;
@@ -75,7 +82,7 @@ namespace ConsoleApplication7
                     }
                     ChoiceString(y, Pre_y);
                 }
-                if (y == 17)
+                if (CurrentMenuVar == 1)
                 {
                     Level();
                 }
@@ -288,9 +295,9 @@ namespace ConsoleApplication7
             {
                 CurrentLevelVar--;
 
-                if (CurrentLevelVar < 1)
+                if (CurrentLevelVar < 0)
                 {
-                    CurrentLevelVar = 3;
+                    CurrentLevelVar = 2;
                 }
             }
 
@@ -298,9 +305,9 @@ namespace ConsoleApplication7
             {
                 CurrentLevelVar++;
 
-                if (CurrentLevelVar > 3)
+                if (CurrentLevelVar > 2)
                 {
-                    CurrentLevelVar = 1;
+                    CurrentLevelVar = 0;
                 }
             }
             
@@ -316,9 +323,9 @@ namespace ConsoleApplication7
                 MenuPic();
                 Window();
                 WriteString("РАЗРАБОТЧИКИ", 35, 15);
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 WriteString("АСЛАНИДИ КОНСТАНТИН", 32, 17);
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 WriteString("ЕМЕЛЬЯНОВ МАКСИМ", 33, 19);
                 Console.ForegroundColor = ConsoleColor.Black;
                 WriteString("СПАСИБО ЗА ВНИМАНИЕ :)", 31, 21);
@@ -370,15 +377,146 @@ namespace ConsoleApplication7
                 }
                 if(k == ConsoleKey.Enter)
                 {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Выводиться предыстрория игры");
-                    Console.WriteLine("Производиться выбор перса(пол)");//для озвучки) если будем делать звук
+
+                    Console.SetCursorPosition(62, 23);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("ПРОДОЛЖИТЬ");
+                    Console.SetCursorPosition(67, 23);
+                    Console.ReadLine();
+                    if(k==ConsoleKey.Enter)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("                              МЕНЮ ВЫБОРА ПЕРСОНАЖА");
+                        WriteString(MenuVar[4], 33, 15);
+                        WriteString(MenuVar[5], 33, 18);
+                        WriteString(MenuVar[6], 33, 21);
+                        Console.SetCursorPosition(35, 15);
+
+                    }
+
+
+                    break;
 
                 }
 
             }
             while (true);
-
+            
 
         }
+        static void Class(int y)
+        {
+            if (k == ConsoleKey.A || k == ConsoleKey.LeftArrow)
+            {
+                CurrentLevelVar--;
+
+                if (CurrentLevelVar < 0)
+                {
+                    CurrentLevelVar = 1;
+                }
+            }
+
+            else if (k == ConsoleKey.D || k == ConsoleKey.RightArrow)
+            {
+                CurrentLevelVar++;
+
+                if (CurrentLevelVar > 1)
+                {
+                    CurrentLevelVar = 0;
+                }
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(28, 17);
+            Console.WriteLine(MenuVar[4] = String.Format("КЛАСС ПЕРСОНАЖА:   {0}", ClassHip[CurrentClass]));
+        }
+        static void Sex(int y)
+        {
+            if (k == ConsoleKey.A || k == ConsoleKey.LeftArrow)
+            {
+                CurrentLevelVar--;
+
+                if (CurrentLevelVar < 0)
+                {
+                    CurrentLevelVar = 1;
+                }
+            }
+
+            else if (k == ConsoleKey.D || k == ConsoleKey.RightArrow)
+            {
+                CurrentLevelVar++;
+
+                if (CurrentLevelVar > 1)
+                {
+                    CurrentLevelVar = 0;
+                }
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(28, 17);
+            Console.WriteLine(MenuVar[5] = String.Format("ПОЛ ПЕРСОНАЖА :   {0}", SexHip[CurrentSex]));
+        }
+        static void GameMenuCursor()
+        {
+            GamePlay = false;
+
+
+            while (GameExit == false)
+            {
+                int Pre_y = y;
+                k = Console.ReadKey(true).Key;
+
+                if (k == ConsoleKey.S || k == ConsoleKey.DownArrow)
+                {
+                    y += 2;
+
+                    if (y > 21)
+                    {
+                        y = 15;
+
+                    }
+                    ChoiceString(y, Pre_y);
+                }
+
+                else if (k == ConsoleKey.W || k == ConsoleKey.UpArrow)
+                {
+                    y -= 2;
+                    if (y < 15)
+                    {
+                        y = 21;
+                    }
+                    ChoiceString(y, Pre_y);
+                }
+                if (CurrentMenuVar == 1)
+                {
+                    Level();
+                }
+
+                else if (k == ConsoleKey.Enter)
+                {
+                    switch (CurrentMenuVar)
+                    {
+                        case (0):
+                            Game();
+                            break;
+
+                        case (1):
+
+                            break;
+
+                        default:
+                            GameExit = true;
+                            break;
+                    }
+                }
+
+
+            }
+        }
+
     }
 }
