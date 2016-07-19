@@ -85,7 +85,7 @@ namespace ConsoleApplication7
                     switch (CurrentMenuVar)
                     {
                         case (0):
-
+                            Game();
                             break;
 
                         case (1):
@@ -343,6 +343,41 @@ namespace ConsoleApplication7
 
         static void Game()
         {
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("                  ВЫ ЗАПУСТИЛИ ИГРУ НА УРОВНЕ СЛОЖНОСТИ:   {0}", LevelHip[CurrentLevelVar]);
+                Console.WriteLine("                         НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ");
+                Console.WriteLine("                        ИЛИ ESCAPE, ЧТОБЫ ВЕРНУТЬСЯ В МЕНЮ");
+
+
+                k = Console.ReadKey(true).Key;
+
+                if (k == ConsoleKey.Escape)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.Clear();
+                    MenuPic();
+                    MenuChoices();
+
+                    CurrentMenuVar = 0;
+
+                    y = 15;
+
+                    break;
+                }
+                if(k == ConsoleKey.Enter)
+                {
+                    Console.WriteLine("Выводиться предыстрория игры");
+                    Console.WriteLine("Производиться выбор перса(пол)");//для озвучки) если будем делать звук
+
+                }
+
+            }
+            while (true);
+
 
         }
     }
